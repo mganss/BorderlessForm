@@ -9,4 +9,6 @@ Implements a borderless window using Windows Forms that uses normal controls to 
 
 The window decoration controls in the example are simple labels and can be changed to provide a custom look.
 
+Example screenshot:
+
 ![Example](screenshot.png "Example screenshot")
