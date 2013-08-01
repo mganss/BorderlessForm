@@ -5,7 +5,6 @@ using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace BorderlessForm
@@ -56,7 +55,7 @@ namespace BorderlessForm
         {
             IntPtr wMenu = NativeMethods.GetSystemMenu(Handle, false);
             var command = NativeMethods.TrackPopupMenuEx(wMenu,
-                (buttons.HasFlag(MouseButtons.Left) ? NativeConstants.TPM_LEFTBUTTON : NativeConstants.TPM_RIGHTBUTTON) | NativeConstants.TPM_RETURNCMD,
+                ((buttons & MouseButtons.Left) > 0 ? NativeConstants.TPM_LEFTBUTTON : NativeConstants.TPM_RIGHTBUTTON) | NativeConstants.TPM_RETURNCMD,
                 pos.X, pos.Y, Handle, IntPtr.Zero);
             if (command != 0)
                 NativeMethods.SendMessage(Handle, (int)WindowMessages.WM_SYSCOMMAND, new IntPtr(command), IntPtr.Zero);
