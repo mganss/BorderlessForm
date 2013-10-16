@@ -285,6 +285,17 @@ namespace BorderlessForm
         public System.Drawing.Point p;
     }
 
+    [StructLayout(LayoutKind.Sequential)]
+    public struct APPBARDATA
+    {
+        public int cbSize; // initialize this field using: Marshal.SizeOf(typeof(APPBARDATA));
+        public IntPtr hWnd;
+        public uint uCallbackMessage;
+        public uint uEdge;
+        public RECT rc;
+        public int lParam;
+    }
+
     public static class NativeMethods
     {
         [DllImport("user32.dll")]
@@ -352,6 +363,9 @@ namespace BorderlessForm
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindowEx(IntPtr parentHandle, IntPtr childAfter, string className, string windowTitle);
+
+        [DllImport("shell32.dll")]
+        public static extern int SHAppBarMessage(uint dwMessage, [In] ref APPBARDATA pData);
     }
 
     public static class NativeConstants
@@ -373,5 +387,8 @@ namespace BorderlessForm
 
         public static readonly IntPtr TRUE = new IntPtr(1);
         public static readonly IntPtr FALSE = new IntPtr(0);
+
+        public const uint ABM_GETSTATE = 0x4;
+        public const int ABS_AUTOHIDE = 0x1;
     }
 }

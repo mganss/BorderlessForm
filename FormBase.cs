@@ -169,6 +169,11 @@ namespace BorderlessForm
                 r.right -= w;
                 r.bottom -= h;
 
+                var appBarData = new APPBARDATA();
+                appBarData.cbSize = Marshal.SizeOf(typeof(APPBARDATA));
+                var autohide = (NativeMethods.SHAppBarMessage(NativeConstants.ABM_GETSTATE, ref appBarData) & NativeConstants.ABS_AUTOHIDE) != 0;
+                if (autohide) r.bottom -= 1;
+
                 Marshal.StructureToPtr(r, m.LParam, true);
             }
 
