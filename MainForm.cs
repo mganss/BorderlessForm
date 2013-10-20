@@ -12,6 +12,8 @@ namespace BorderlessForm
 {
     public partial class MainForm : FormBase
     {
+        private FormWindowState previousWindowState;
+
         public MainForm()
         {
             InitializeComponent();
@@ -43,8 +45,57 @@ namespace BorderlessForm
 
             MinimizeLabel.Click += (s, e) => WindowState = FormWindowState.Minimized;
             MaximizeLabel.Click += (s, e) => ToggleMaximize();
-            SizeChanged += (s, e) => MaximizeLabel.Text = WindowState == FormWindowState.Maximized ? "2" : "1";
+            previousWindowState = MinMaxState;
+            SizeChanged += MainForm_SizeChanged;
             CloseLabel.Click += (s, e) => Close();
+        }
+
+        void MainForm_SizeChanged(object sender, EventArgs e)
+        {
+            var maximized = MinMaxState == FormWindowState.Maximized;
+            MaximizeLabel.Text = maximized ? "2" : "1";
+
+            var panels = new[] { TopLeftCornerPanel, TopRightCornerPanel, BottomLeftCornerPanel, BottomRightCornerPanel,
+                TopBorderPanel, LeftBorderPanel, RightBorderPanel, BottomBorderPanel };
+
+            foreach (var panel in panels)
+            {
+                panel.Visible = !maximized;
+            }
+
+            if (previousWindowState != MinMaxState)
+            {
+                if (maximized)
+                {
+                    SystemLabel.Left = 0;
+                    SystemLabel.Top = 0;
+                    CloseLabel.Left += RightBorderPanel.Width;
+                    CloseLabel.Top = 0;
+                    MaximizeLabel.Left += RightBorderPanel.Width;
+                    MaximizeLabel.Top = 0;
+                    MinimizeLabel.Left += RightBorderPanel.Width;
+                    MinimizeLabel.Top = 0;
+                    TitleLabel.Left -= LeftBorderPanel.Width;
+                    TitleLabel.Width += LeftBorderPanel.Width + RightBorderPanel.Width;
+                    TitleLabel.Top = 0;
+                }
+                else
+                {
+                    SystemLabel.Left = LeftBorderPanel.Width;
+                    SystemLabel.Top = TopBorderPanel.Height;
+                    CloseLabel.Left -= RightBorderPanel.Width;
+                    CloseLabel.Top = TopBorderPanel.Height;
+                    MaximizeLabel.Left -= RightBorderPanel.Width;
+                    MaximizeLabel.Top = TopBorderPanel.Height;
+                    MinimizeLabel.Left -= RightBorderPanel.Width;
+                    MinimizeLabel.Top = TopBorderPanel.Height;
+                    TitleLabel.Left += LeftBorderPanel.Width;
+                    TitleLabel.Width -= LeftBorderPanel.Width + RightBorderPanel.Width;
+                    TitleLabel.Top = TopBorderPanel.Height;
+                }
+
+                previousWindowState = MinMaxState;
+            }
         }
 
         private DateTime systemClickTime = DateTime.MinValue;
