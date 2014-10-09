@@ -1,3 +1,5 @@
+# BorderlessForm
+
 Implements a borderless window using Windows Forms that uses normal controls to preserve the functionality of sizable windows such as:
 
 - Move by dragging the title bar
@@ -12,3 +14,8 @@ The window decoration controls in the example are simple labels and can be chang
 Example screenshot:
 
 ![Example](screenshot.png "Example screenshot")
+
+Unsupported:
+
+- Border shadow ("glow"). Office 2013 and Visual Studio 2013 implement this using [4 additional top level windows](http://stackoverflow.com/a/15303486) that keep in sync with the main window's size and position. 
+
