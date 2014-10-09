@@ -51,14 +51,14 @@ namespace BorderlessForm
             ShowSystemMenu(buttons, MousePosition);
         }
 
+        protected static int MakeLong(short lowPart, short highPart)
+        {
+            return (int)(((ushort)lowPart) | (uint)(highPart << 16));
+        }
+        
         protected void ShowSystemMenu(MouseButtons buttons, Point pos)
         {
-            IntPtr wMenu = NativeMethods.GetSystemMenu(Handle, false);
-            var command = NativeMethods.TrackPopupMenuEx(wMenu,
-                ((buttons & MouseButtons.Left) > 0 ? NativeConstants.TPM_LEFTBUTTON : NativeConstants.TPM_RIGHTBUTTON) | NativeConstants.TPM_RETURNCMD,
-                pos.X, pos.Y, Handle, IntPtr.Zero);
-            if (command != 0)
-                NativeMethods.SendMessage(Handle, (int)WindowMessages.WM_SYSCOMMAND, new IntPtr(command), IntPtr.Zero);
+            NativeMethods.SendMessage(Handle, (int)WindowMessages.WM_SYSMENU, 0, MakeLong((short)pos.X, (short)pos.Y));
         }
 
         protected override void WndProc(ref Message m)

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.TopLeftCornerPanel = new System.Windows.Forms.Panel();
             this.TopRightCornerPanel = new System.Windows.Forms.Panel();
             this.BottomLeftCornerPanel = new System.Windows.Forms.Panel();
@@ -41,6 +42,7 @@
             this.CloseLabel = new System.Windows.Forms.Label();
             this.TitleLabel = new System.Windows.Forms.Label();
             this.SystemLabel = new System.Windows.Forms.Label();
+            this.DecorationToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.SuspendLayout();
             // 
             // TopLeftCornerPanel
@@ -137,6 +139,7 @@
             this.MinimizeLabel.TabIndex = 7;
             this.MinimizeLabel.Text = "0";
             this.MinimizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DecorationToolTip.SetToolTip(this.MinimizeLabel, "Minimize");
             // 
             // MaximizeLabel
             // 
@@ -149,6 +152,7 @@
             this.MaximizeLabel.TabIndex = 8;
             this.MaximizeLabel.Text = "1";
             this.MaximizeLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DecorationToolTip.SetToolTip(this.MaximizeLabel, "Maximize");
             // 
             // CloseLabel
             // 
@@ -161,6 +165,7 @@
             this.CloseLabel.TabIndex = 9;
             this.CloseLabel.Text = "r";
             this.CloseLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.DecorationToolTip.SetToolTip(this.CloseLabel, "Close");
             // 
             // TitleLabel
             // 
@@ -227,6 +232,7 @@
         private System.Windows.Forms.Label TitleLabel;
         private System.Windows.Forms.Label SystemLabel;
         private System.Windows.Forms.Label CloseLabel;
+        private System.Windows.Forms.ToolTip DecorationToolTip;
     }
 }
 
