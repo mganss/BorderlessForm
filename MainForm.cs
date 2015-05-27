@@ -63,7 +63,7 @@ namespace BorderlessForm
 
         protected void SetLabelColors(Control control, MouseState state)
         {
-            if (!Focused) return;
+            if (!ContainsFocus) return;
 
             var textColor = ActiveTextColor;
             var backColor = NormalBackColor;
