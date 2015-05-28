@@ -63,7 +63,7 @@ namespace BorderlessForm
 
         protected void SetLabelColors(Control control, MouseState state)
         {
-            if (!Focused) return;
+            if (!ContainsFocus) return;
 
             var textColor = ActiveTextColor;
             var backColor = NormalBackColor;
@@ -287,17 +287,19 @@ namespace BorderlessForm
         }
 
         private DateTime titleClickTime = DateTime.MinValue;
+        private Point titleClickPosition = Point.Empty;
 
         void TitleLabel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
                 var clickTime = (DateTime.Now - titleClickTime).TotalMilliseconds;
-                if (clickTime < SystemInformation.DoubleClickTime)
+                if (clickTime < SystemInformation.DoubleClickTime && e.Location == titleClickPosition)
                     ToggleMaximize();
                 else
                 {
                     titleClickTime = DateTime.Now;
+                    titleClickPosition = e.Location;
                     DecorationMouseDown(HitTestValues.HTCAPTION);
                 }
             }
