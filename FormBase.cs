@@ -115,7 +115,8 @@ namespace BorderlessForm
 
         private void SetWindowRegion(IntPtr hwnd, int left, int top, int right, int bottom)
         {
-            var hrg = new HandleRef((object)this, NativeMethods.CreateRectRgn(0, 0, 0, 0));
+            var rgn = NativeMethods.CreateRectRgn(0, 0, 0, 0);
+            var hrg = new HandleRef((object)this, rgn);
             var r = NativeMethods.GetWindowRgn(hwnd, hrg.Handle);
             RECT box;
             NativeMethods.GetRgnBox(hrg.Handle, out box);
@@ -124,6 +125,7 @@ namespace BorderlessForm
                 var hr = new HandleRef((object)this, NativeMethods.CreateRectRgn(left, top, right, bottom));
                 NativeMethods.SetWindowRgn(hwnd, hr.Handle, NativeMethods.IsWindowVisible(hwnd));
             }
+            NativeMethods.DeleteObject(rgn);
         }
 
         public FormWindowState MinMaxState
