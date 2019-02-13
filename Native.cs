@@ -368,6 +368,9 @@ namespace BorderlessForm
 
         [DllImport("shell32.dll")]
         public static extern int SHAppBarMessage(uint dwMessage, [In] ref APPBARDATA pData);
+
+        [DllImport("gdi32.dll")]
+        public static extern bool DeleteObject(IntPtr hObj);
     }
 
     public static class NativeConstants
